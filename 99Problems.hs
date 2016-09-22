@@ -24,6 +24,15 @@ elementAt (e:_) 0	 = e
 elementAt [] _	 = error "Indice fuera de rango"
 elementAt (_:xs) n = if n<0 then error "Indice negativo" else elementAt xs (n-1)
 
+--Problem 4
+myLength [] = 0
+myLength (x:xs) = 1 + myLength xs
+
+--Problem 5
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = (myReverse xs) ++ [x]
+
 --Problem 31
 isPrime x = [ d |d<-[2..x `div` 2], d*d==x, x `mod` d == 0] == []
 
