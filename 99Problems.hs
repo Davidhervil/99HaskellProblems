@@ -1,4 +1,3 @@
-
 --Problem 1
 mylast :: [a] -> a
 mylast []  		= error "Lista vacia"
@@ -33,7 +32,68 @@ myReverse :: [a] -> [a]
 myReverse [] = []
 myReverse (x:xs) = (myReverse xs) ++ [x]
 
---Problem 31
+myReverse2 [] = []
+myReverse2 (x:xs) = aux (x:xs) []
+	where
+		aux [] l = l 
+		aux (x:xs) l = aux xs (x:l)
+
+--Problem 6
+isPalindrome :: (Eq a )=>[a] -> Bool
+isPalindrome xs = xs == (myReverse2 xs)
+
+--Problem 7
+data NestedList a = Elem a | List [NestedList a]
+flatten (Elem a)= [a]
+flatten (List ls) = concatMap flatten ls
+
+--Problem 8
+compress :: Eq a => [a] -> [a]
+compress [] = []
+compress (x:xs) = x: ( compress $ dropWhile (==x) xs)
+
+--Problem 9
+pack :: Eq a => [a] -> [[a]]
+pack [] = []
+pack xs = reverse $ foldl pack' [] xs
+  where
+  	pack' [] x = [[x]]
+  	pack' (xs:xss) x = if head xs == x then (x:xs):xss
+  					   else [x]:(xs:xss)
+
+--Problem 10
+encode :: Eq a => [a] -> [(Int,a)]
+encode xs = reverse $ foldl f [] xs
+  where
+  	f [] x = [(1,x)]
+  	f ((n,xs):xss) x = if xs == x then (n+1,x):xss
+  					   else (1,x):(n,xs):xss
+--Problem 11
+
+--Problem 12
+
+--Problem 13
+
+--Problem 14
+
+--Problem 15
+--Problem 16
+--Problem 17
+--Problem 18
+--Problem 19
+--Problem 20
+--Problem 21
+--Problem 22
+--Problem 23
+--Problem 24
+--Problem 25
+--Problem 26
+--Problem 27
+--Problem 28
+--Problem 29
+--Problem 30
+
+ --Problem 31
 isPrime x = [ d |d<-[2..x `div` 2], d*d==x, x `mod` d == 0] == []
 
 --Problem 32
@@ -58,3 +118,63 @@ totiem x 	= auxfunc x (x-1)
 goldbach x = filter bothPrime [(e,x -e)|e<-(2:[3,5..x `div` 2])]
 	where
 		bothPrime (x,y) = isPrime x && isPrime y
+
+--Problem 41
+--Problem 42
+--Problem 43
+--Problem 44
+--Problem 45
+--Problem 46
+--Problem 47
+--Problem 48
+--Problem 49
+--Problem 50
+--Problem 51
+--Problem 52
+--Problem 53
+--Problem 54
+--Problem 55
+--Problem 56
+--Problem 57
+--Problem 58
+--Problem 59
+--Problem 60
+--Problem 61
+--Problem 62
+--Problem 63
+--Problem 64
+--Problem 65
+--Problem 66
+--Problem 67
+--Problem 68
+--Problem 69
+--Problem 70
+--Problem 71
+--Problem 72
+--Problem 73
+--Problem 74
+--Problem 75
+--Problem 76
+--Problem 77
+--Problem 78
+--Problem 79
+--Problem 80
+--Problem 81
+--Problem 82
+--Problem 83
+--Problem 84
+--Problem 85
+--Problem 86
+--Problem 87
+--Problem 88
+--Problem 89
+--Problem 90
+--Problem 91
+--Problem 92
+--Problem 93
+--Problem 94
+--Problem 95
+--Problem 96
+--Problem 97
+--Problem 98
+--Problem 99
