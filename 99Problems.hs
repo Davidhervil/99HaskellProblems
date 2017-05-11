@@ -1,26 +1,26 @@
 --Problem 1
 mylast :: [a] -> a
-mylast []  		= error "Lista vacia"
-mylast [x] 		= x
-mylast (_:xs) 	= mylast xs
+mylast []       = error "Lista vacia"
+mylast [x]      = x
+mylast (_:xs)   = mylast xs
 
-mylast1 [x] 	= Just x
-mylast1 [] 		= Nothing
-mylast1 (_:xs)	= mylast1 xs
+mylast1 [x]     = Just x
+mylast1 []      = Nothing
+mylast1 (_:xs)  = mylast1 xs
 
-mylast2 [x] 	= Right x
-mylast2 [] 		= Left "Lista vacia"
-mylast2 (_:xs) 	= mylast2 xs
+mylast2 [x]     = Right x
+mylast2 []      = Left "Lista vacia"
+mylast2 (_:xs)  = mylast2 xs
 
 --Problem 2
 myButLast :: [a] -> a
-myButLast [x] 	= error "No hay suficientes elementos"
-myButLast [] 	= error "Lista vacia"
-myButLast xs 	= if length xs == 2 then head xs else myButLast (tail xs)
+myButLast [x]   = error "No hay suficientes elementos"
+myButLast []    = error "Lista vacia"
+myButLast xs    = if length xs == 2 then head xs else myButLast (tail xs)
 
 --Problem 3
-elementAt (e:_) 0	 = e
-elementAt [] _	 = error "Indice fuera de rango"
+elementAt (e:_) 0    = e
+elementAt [] _   = error "Indice fuera de rango"
 elementAt (_:xs) n = if n<0 then error "Indice negativo" else elementAt xs (n-1)
 
 --Problem 4
@@ -34,9 +34,9 @@ myReverse (x:xs) = (myReverse xs) ++ [x]
 
 myReverse2 [] = []
 myReverse2 (x:xs) = aux (x:xs) []
-	where
-		aux [] l = l 
-		aux (x:xs) l = aux xs (x:l)
+    where
+        aux [] l = l 
+        aux (x:xs) l = aux xs (x:l)
 
 --Problem 6
 isPalindrome :: (Eq a )=>[a] -> Bool
@@ -57,23 +57,52 @@ pack :: Eq a => [a] -> [[a]]
 pack [] = []
 pack xs = reverse $ foldl pack' [] xs
   where
-  	pack' [] x = [[x]]
-  	pack' (xs:xss) x = if head xs == x then (x:xs):xss
-  					   else [x]:(xs:xss)
+    pack' [] x = [[x]]
+    pack' (xs:xss) x = if head xs == x then (x:xs):xss
+                       else [x]:(xs:xss)
+
+goodpack :: Eq a => [a] -> [[a]]
+goodpack (x:xs) = let (first,rest) = span (==x) xs
+               in (x:first) : goodpack rest
+goodpack [] = []
 
 --Problem 10
 encode :: Eq a => [a] -> [(Int,a)]
-encode xs = reverse $ foldl f [] xs
+encode [] = []
+encode xs = encode' $ goodpack xs
   where
-  	f [] x = [(1,x)]
-  	f ((n,xs):xss) x = if xs == x then (n+1,x):xss
-  					   else (1,x):(n,xs):xss
+    encode' [] = []
+    encode' (xs:xss) = (length xs, head xs): encode' xss
+
 --Problem 11
+data Occurrence a = Multiple Int a | Single a
+  deriving(Show)
+encodeModified :: Eq a => [a] -> [Occurrence a]
+encodeModified xs = map occurs $ encode xs
+  where
+    occurs (n,x)
+      | n>1 = Multiple n x
+      | otherwise = Single x
 
 --Problem 12
+decodeModified :: [Occurrence a] -> [a]
+decodeModified = concatMap f
+  where
+    f (Multiple n x) = replicate n x
+    f (Single x) = [x]
 
 --Problem 13
-
+encodeDirect ::Eq a => [a] -> [Occurrence a]
+encodeDirect [] = []
+encodeDirect xs = foldr go [] xs
+  where
+    go x [] = [Single x]
+    go x os@(o:os') =  case o of 
+      Single e -> if e == x then (Multiple 2 e):os'
+                  else (Single x):os
+      Multiple n e-> if x==e then (Multiple (n+1) e):os'
+                      else Single x:os
+                      
 --Problem 14
 
 --Problem 15
@@ -106,18 +135,18 @@ maxComDiv a b = maxComDiv b (a `mod` b)
 coprime a b = maxComDiv a b == 1
 
 --Problem 34
-totiem 1 	= 1
-totiem x 	= auxfunc x (x-1)
-	where 
-		auxfunc n 1 	= 1
-		auxfunc n c 	= if (coprime n c) then (1 + auxfunc n (c-1))
-	 					else auxfunc n (c-1)
+totiem 1    = 1
+totiem x    = auxfunc x (x-1)
+    where 
+        auxfunc n 1     = 1
+        auxfunc n c     = if (coprime n c) then (1 + auxfunc n (c-1))
+                        else auxfunc n (c-1)
 
 --Problem 40
 
 goldbach x = filter bothPrime [(e,x -e)|e<-(2:[3,5..x `div` 2])]
-	where
-		bothPrime (x,y) = isPrime x && isPrime y
+    where
+        bothPrime (x,y) = isPrime x && isPrime y
 
 --Problem 41
 --Problem 42
