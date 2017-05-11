@@ -109,7 +109,18 @@ encodeDirect xs = foldr go [] xs
 --Problem 16
 --Problem 17
 --Problem 18
+slice :: [a] -> Int -> Int -> [a]
+slice xs l r =  snd $ split (fst $ split xs r) (l-1)
+
 --Problem 19
+rotate :: [a] -> Int -> [a]
+rotate xs@(x:xs') n
+  | abs(rem n (length xs))==0 = xs
+  | n>0 = slice (cycle xs) (paso+1) (len + paso)
+  | n<0 = slice (cycle xs) (len-paso+1) (len*2 - paso)
+  where
+    paso = abs $ rem n len
+    len = length xs
 --Problem 20
 --Problem 21
 --Problem 22
