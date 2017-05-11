@@ -102,12 +102,31 @@ encodeDirect xs = foldr go [] xs
                   else (Single x):os
       Multiple n e-> if x==e then (Multiple (n+1) e):os'
                       else Single x:os
-                      
+
 --Problem 14
+dupli :: [a] -> [a]
+dupli = concatMap (replicate 2)
 
 --Problem 15
+repli :: [a] -> Int -> [a]
+repli xs n = concatMap (replicate n) xs
+
 --Problem 16
+dropEvery :: [a] -> Int -> [a]
+dropEvery xs n = dropEvery' xs n 1
+  where
+    dropEvery' xs 0 _ = xs
+    dropEvery' [] _ _ = []
+    dropEvery' (x:xs) n i
+      | i==n = dropEvery' xs n 1
+      | otherwise = x:dropEvery' xs n (i+1)
+
 --Problem 17
+split :: [a] -> Int -> ([a],[a])
+split xs 0 = ([],xs)
+split [] _ = ([],[])
+split (x:xs) n = let (ls,rs) = split xs (n-1) in (x:ls,rs)
+
 --Problem 18
 slice :: [a] -> Int -> Int -> [a]
 slice xs l r =  snd $ split (fst $ split xs r) (l-1)
@@ -121,7 +140,9 @@ rotate xs@(x:xs') n
   where
     paso = abs $ rem n len
     len = length xs
+
 --Problem 20
+
 --Problem 21
 --Problem 22
 --Problem 23
@@ -160,6 +181,8 @@ goldbach x = filter bothPrime [(e,x -e)|e<-(2:[3,5..x `div` 2])]
         bothPrime (x,y) = isPrime x && isPrime y
 
 --Problem 41
+
+
 --Problem 42
 --Problem 43
 --Problem 44
