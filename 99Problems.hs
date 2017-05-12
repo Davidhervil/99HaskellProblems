@@ -142,11 +142,23 @@ rotate xs@(x:xs') n
     len = length xs
 
 --Problem 20
+removeAt ::  Int ->[a] -> (Maybe a,[a]) 
+removeAt _ [] = (Nothing,[])
+removeAt 1 (x:xs) = (Just x,xs)
+removeAt i (x:xs) = let (e,r) = removeAt (i-1) xs in (e,x:r)
 
 --Problem 21
+insertAt :: a -> [a] -> Int -> [a]
+insertAt e xs 1 = e:xs
+insertAt e [] _ = []
+insertAt e (x:xs) i = x:(insertAt e xs (i-1))
+
 --Problem 22
+
 --Problem 23
+
 --Problem 24
+
 --Problem 25
 --Problem 26
 --Problem 27
