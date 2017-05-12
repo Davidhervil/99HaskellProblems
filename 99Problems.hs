@@ -1,3 +1,4 @@
+import qualified Data.List as DL
 --Problem 1
 mylast :: [a] -> a
 mylast []       = error "Lista vacia"
@@ -154,6 +155,12 @@ insertAt e [] _ = []
 insertAt e (x:xs) i = x:(insertAt e xs (i-1))
 
 --Problem 22
+range :: Integer -> Integer -> [Integer]
+range l r = DL.unfoldr spread l
+  where
+  	spread l 
+  	  | l<=r = Just (l,l+1) 
+  	  |otherwise = Nothing
 
 --Problem 23
 
